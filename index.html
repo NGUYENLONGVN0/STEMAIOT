@@ -242,10 +242,6 @@
         <a href="#gioi-thieu" class="px-3.5 py-2 text-sm font-medium text-slate-800 hover:bg-white/65 rounded-full transition-colors">1. Giới thiệu & Hoạt động</a>
         <a href="#thanh-tich" class="px-3.5 py-2 text-sm font-medium text-slate-800 hover:bg-white/65 rounded-full transition-colors">2. Thành tích & Sản phẩm</a>
         <a href="#dang-ky" class="px-3.5 py-2 text-sm font-medium text-slate-800 hover:bg-white/65 rounded-full transition-colors">3. Điền đơn đăng ký</a>
-        <button type="button" id="btnOpenAdminDrawer" class="ml-2 btn-outline-flat px-3.5 py-1.5 text-xs font-mono-tech flex items-center gap-1.5">
-          <span>Đơn đã nộp</span>
-          <span id="navRegCountBadge" class="bg-slate-900 text-white px-2 py-0.5 rounded-full text-xs">4</span>
-        </button>
         <a href="#dang-ky" class="ml-2 btn-primary-green px-4 py-2 text-sm">Đăng ký ngay</a>
       </nav>
 
@@ -263,9 +259,6 @@
       <a href="#thanh-tich" class="mobile-nav-link block px-3.5 py-2 text-sm font-medium text-slate-800 hover:bg-white/60 rounded-xl">2. Thành tích & Sản phẩm</a>
       <a href="#dang-ky" class="mobile-nav-link block px-3.5 py-2 text-sm font-medium text-slate-800 hover:bg-white/60 rounded-xl">3. Điền đơn đăng ký</a>
       <div class="pt-2 border-t border-white/60 flex items-center gap-2">
-        <button type="button" id="btnOpenAdminMobile" class="btn-outline-flat px-3 py-2 text-xs font-mono-tech flex-1 text-center">
-          Xem danh sách đơn (<span id="mobileRegCountBadge">4</span>)
-        </button>
         <a href="#dang-ky" class="mobile-nav-link btn-primary-green px-4 py-2 text-xs text-center flex-1">Điền đơn ngay</a>
       </div>
     </div>
@@ -429,11 +422,7 @@
               Tổng hợp các đề tài Khoa học Kỹ thuật, mô hình triển lãm STEM và giải thưởng do chính học sinh THPT Củ Chi thực hiện.
             </p>
           </div>
-          <div class="flex items-center gap-2 shrink-0">
-            <button type="button" id="btnOpenAddAchievement" class="btn-secondary-navy px-5 py-2.5 text-xs sm:text-sm font-mono-tech">
-              + Thêm thành tích / dự án
-            </button>
-          </div>
+          
         </div>
 
         <!-- Điểm nhấn dự án thực tế có hình chụp mô hình kiểu Liquid Glass -->
@@ -478,21 +467,6 @@
 
         <!-- Thanh công cụ lọc & tìm kiếm thành tích -->
         <div class="mt-8 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
-          <div class="flex flex-wrap items-center gap-1.5" role="group" aria-label="Lọc theo nhóm thành tích">
-            <button type="button" data-ach-cat="all" class="ach-cat-btn btn-outline-flat btn-filter-active px-3 py-1.5 text-xs font-mono-tech">
-              Tất cả (<span id="countAllAch">6</span>)
-            </button>
-            <button type="button" data-ach-cat="khkt" class="ach-cat-btn btn-outline-flat px-3 py-1.5 text-xs font-mono-tech">
-              Cuộc thi KHKT & STEM
-            </button>
-            <button type="button" data-ach-cat="san-pham" class="ach-cat-btn btn-outline-flat px-3 py-1.5 text-xs font-mono-tech">
-              Sản phẩm ứng dụng tại trường
-            </button>
-            <button type="button" data-ach-cat="phong-trao" class="ach-cat-btn btn-outline-flat px-3 py-1.5 text-xs font-mono-tech">
-              Ngày hội & Giao lưu
-            </button>
-          </div>
-
           <div class="flex items-center gap-2">
             <select id="selectAchYear" aria-label="Lọc theo năm học" class="input-flat text-xs font-mono-tech w-auto py-1.5">
               <option value="all">Tất cả năm học</option>
@@ -740,35 +714,40 @@
               </ol>
             </div>
 
-            <!-- Bảng danh sách các bạn vừa đăng ký (Live Roster) -->
-            <div class="flat-card p-5">
-              <div class="flex items-center justify-between gap-2 border-b border-zinc-200 pb-3 mb-3">
+            <!-- Hộp thông tin hỗ trợ & lịch sinh hoạt phòng Lab -->
+            <div class="flat-card p-5 space-y-4">
+              <div class="flex items-center justify-between gap-2 border-b border-white/70 pb-3">
                 <div>
-                  <div class="font-mono-tech text-xs text-zinc-500">DANH SÁCH ĐƠN GHI NHẬN</div>
-                  <h3 class="text-base font-bold text-zinc-900">Học sinh đã đăng ký (<span id="sideRegCount">4</span>)</h3>
+                  <div class="font-mono-tech text-xs text-teal-800 font-bold uppercase">LỊCH HOẠT ĐỘNG & HỖ TRỢ KỸ THUẬT</div>
+                  <h3 class="text-base font-bold text-slate-900 mt-0.5">Phòng Thực Hành STEM – AIOT</h3>
                 </div>
-                <div class="flex items-center gap-1.5">
-                  <button type="button" id="btnExportCsvQuick" class="btn-outline-flat px-2.5 py-1 text-xs font-mono-tech">
-                    Xuất .CSV
-                  </button>
-                  <button type="button" id="btnOpenFullRoster" class="btn-secondary-navy px-2.5 py-1 text-xs font-mono-tech">
-                    Quản lý đơn
-                  </button>
-                </div>
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
               </div>
 
-              <!-- Ô tìm nhanh đơn theo tên hoặc lớp -->
-              <div class="mb-3">
-                <input
-                  type="text"
-                  id="inputQuickSearchReg"
-                  placeholder="Tra cứu tên học sinh, lớp hoặc mã đơn..."
-                  class="input-flat text-xs py-1.5"
-                />
-              </div>
+              <div class="space-y-3 text-xs text-slate-700">
+                <div class="p-3 bg-white/60 border border-white/90 rounded-xl space-y-1">
+                  <div class="font-semibold text-slate-900 flex items-center gap-1.5 font-mono-tech">
+                    <span class="w-1.5 h-1.5 rounded-full bg-teal-600"></span>
+                    <span>Lịch mở cửa phòng Lab:</span>
+                  </div>
+                  <p class="text-slate-600 pl-3">Chiều Thứ Ba & Chiều Thứ Năm (14:30 – 17:00), Thứ Bảy sinh hoạt dự án chuyên sâu theo nhóm.</p>
+                </div>
 
-              <div id="recentRegistrationsList" class="space-y-2.5 max-h-80 overflow-y-auto pr-1">
-                <!-- Render bằng JavaScript -->
+                <div class="p-3 bg-white/60 border border-white/90 rounded-xl space-y-1">
+                  <div class="font-semibold text-slate-900 flex items-center gap-1.5 font-mono-tech">
+                    <span class="w-1.5 h-1.5 rounded-full bg-teal-600"></span>
+                    <span>Quy định mượn kit & linh kiện:</span>
+                  </div>
+                  <p class="text-slate-600 pl-3">Thành viên đăng ký mượn bo mạch (ESP32, Arduino, cảm biến) qua Ban Chủ Nhiệm để nghiên cứu tại nhà hoặc làm đề tài KHKT.</p>
+                </div>
+
+                <div class="p-3 bg-white/60 border border-white/90 rounded-xl space-y-1">
+                  <div class="font-semibold text-slate-900 flex items-center gap-1.5 font-mono-tech">
+                    <span class="w-1.5 h-1.5 rounded-full bg-teal-600"></span>
+                    <span>Hỗ trợ kỹ thuật & giải đáp:</span>
+                  </div>
+                  <p class="text-slate-600 pl-3">Đội ngũ mentor khối 11, 12 và giáo viên hướng dẫn hỗ trợ debug code C/C++, Python và fix lỗi mạch trực tiếp.</p>
+                </div>
               </div>
             </div>
 
@@ -854,118 +833,6 @@
         <button type="button" id="btnModalRegisterSimilar" class="btn-primary-green px-4 py-2 text-xs">
           Đăng ký làm dự án tương tự tại CLB →
         </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ==========================================
-       MODAL 2: THÊM THÀNH TÍCH / DỰ ÁN MỚI
-       ========================================== -->
-  <div id="modalAddAchievement" class="fixed inset-0 z-50 hidden bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4">
-    <div class="flat-card-strong max-w-lg w-full max-h-[90vh] overflow-y-auto p-5 sm:p-7">
-      <div class="flex items-center justify-between border-b border-zinc-300 pb-3 mb-4">
-        <div>
-          <span class="font-mono-tech text-xs text-green-800 font-bold">CẬP NHẬT HỒ SƠ CLB</span>
-          <h3 class="text-lg font-bold text-zinc-900">Thêm Thành Tích / Sản Phẩm Mới</h3>
-        </div>
-        <button type="button" id="btnCloseAddAchievement" class="btn-outline-flat px-2.5 py-1 text-xs font-mono-tech">
-          Đóng [X]
-        </button>
-      </div>
-
-      <form id="formAddAchievement" class="space-y-3.5 text-sm">
-        <div>
-          <label for="newAchTitle" class="block text-xs font-semibold text-zinc-800 mb-1">Tên đề tài / Sản phẩm *</label>
-          <input type="text" id="newAchTitle" required placeholder="VD: Máy đo nồng độ bụi mịn PM2.5 tại cổng trường" class="input-flat text-sm" />
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label for="newAchCategory" class="block text-xs font-semibold text-zinc-800 mb-1">Phân loại *</label>
-            <select id="newAchCategory" class="input-flat text-sm">
-              <option value="khkt">Cuộc thi KHKT & STEM</option>
-              <option value="san-pham">Sản phẩm ứng dụng</option>
-              <option value="phong-trao">Ngày hội & Giao lưu</option>
-            </select>
-          </div>
-          <div>
-            <label for="newAchYear" class="block text-xs font-semibold text-zinc-800 mb-1">Năm học *</label>
-            <select id="newAchYear" class="input-flat text-sm">
-              <option value="2025 - 2026">2025 - 2026</option>
-              <option value="2024 - 2025">2024 - 2025</option>
-              <option value="2023 - 2024">2023 - 2024</option>
-            </select>
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label for="newAchAward" class="block text-xs font-semibold text-zinc-800 mb-1">Giải thưởng / Kết quả *</label>
-            <input type="text" id="newAchAward" required placeholder="VD: Giải Nhì cấp Trường" class="input-flat text-sm" />
-          </div>
-          <div>
-            <label for="newAchTeam" class="block text-xs font-semibold text-zinc-800 mb-1">Nhóm học sinh / Lớp *</label>
-            <input type="text" id="newAchTeam" required placeholder="VD: Nhóm HS 10A1 & 11A4" class="input-flat text-sm" />
-          </div>
-        </div>
-        <div>
-          <label for="newAchHardware" class="block text-xs font-semibold text-zinc-800 mb-1">Linh kiện chính (cách nhau dấu phẩy) *</label>
-          <input type="text" id="newAchHardware" required placeholder="VD: ESP32, Cảm biến bụi GP2Y10, Màn hình OLED 0.96" class="input-flat text-sm font-mono-tech" />
-        </div>
-        <div>
-          <label for="newAchSummary" class="block text-xs font-semibold text-zinc-800 mb-1">Mô tả nguyên lý hoạt động *</label>
-          <textarea id="newAchSummary" rows="3" required placeholder="Mô tả ngắn gọn cách thức mạch hoạt động và ứng dụng thực tế..." class="input-flat text-sm"></textarea>
-        </div>
-        <div class="pt-2 flex justify-end gap-2 border-t border-zinc-200">
-          <button type="button" id="btnCancelAddAchievement" class="btn-outline-flat px-4 py-2 text-xs">Hủy</button>
-          <button type="submit" class="btn-primary-green px-5 py-2 text-xs">Lưu vào danh sách</button>
-        </div>
-      </form>
-    </div>
-
-
-  <!-- ==========================================
-       MODAL 4: QUẢN LÝ & XUẤT DANH SÁCH ĐƠN ĐĂNG KÝ
-       ========================================== -->
-  <div id="modalRosterManager" class="fixed inset-0 z-50 hidden bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4">
-    <div class="flat-card-strong max-w-4xl w-full max-h-[90vh] overflow-y-auto p-5 sm:p-7">
-      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-300 pb-3 mb-4">
-        <div>
-          <span class="font-mono-tech text-xs text-green-800 font-bold">BẢNG TỔNG HỢP DÀNH CHO BAN CHỦ NHIỆM</span>
-          <h3 class="text-lg font-bold text-zinc-900">Danh Sách Đơn Đăng Ký Thành Viên</h3>
-        </div>
-        <div class="flex items-center gap-2">
-          <button type="button" id="btnCopyRosterText" class="btn-outline-flat px-3 py-1.5 text-xs font-mono-tech">
-            Sao chép danh sách
-          </button>
-          <button type="button" id="btnExportCsvModal" class="btn-primary-green px-3 py-1.5 text-xs font-mono-tech">
-            Tải file .CSV (Excel)
-          </button>
-          <button type="button" id="btnCloseRosterModal" class="btn-outline-flat px-2.5 py-1.5 text-xs font-mono-tech">
-            Đóng [X]
-          </button>
-        </div>
-      </div>
-
-      <div id="copyFeedbackBanner" class="hidden mb-3 p-2.5 bg-green-50 border border-green-700 text-green-900 text-xs font-mono-tech rounded">
-        Đã sao chép toàn bộ danh sách đơn đăng ký vào bộ nhớ tạm (Clipboard).
-      </div>
-
-      <div class="overflow-x-auto border border-zinc-300 rounded">
-        <table class="w-full text-left border-collapse text-xs">
-          <thead>
-            <tr class="bg-zinc-100 border-b border-zinc-300 font-mono-tech text-zinc-700">
-              <th class="p-2.5">Mã đơn</th>
-              <th class="p-2.5">Họ và tên</th>
-              <th class="p-2.5">Lớp</th>
-              <th class="p-2.5">SĐT / Zalo</th>
-              <th class="p-2.5">Ban đăng ký</th>
-              <th class="p-2.5">Kinh nghiệm</th>
-              <th class="p-2.5">Thao tác</th>
-            </tr>
-          </thead>
-          <tbody id="rosterTableBody" class="divide-y divide-zinc-200">
-            <!-- Render bằng JS -->
-          </tbody>
-        </table>
       </div>
     </div>
   </div>
