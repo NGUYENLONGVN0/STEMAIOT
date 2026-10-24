@@ -1053,7 +1053,7 @@
       document.getElementById("modalProjAward").textContent = item.award;
       document.getElementById("modalProjTeam").textContent = item.team;
       document.getElementById("modalProjSummary").textContent = item.summary;
-      document.getElementById("modalProjPinout").textContent = item.pinout || "Đấu nối tiêu chuẩn trên Breadboard tại Phòng Lab CLB.";
+      document.getElementById("modalProjPinout").textContent = item.pinout || "Chưa được công khai!";
 
       document.getElementById("modalProjHardware").innerHTML = (item.hardware || [])
         .map((hw) => `<span class="bg-zinc-100 border border-zinc-300 px-2.5 py-1 rounded-sm">${escapeHtml(hw)}</span>`)
