@@ -827,19 +827,6 @@
     const INITIAL_ACHIEVEMENTS = [
       {
         id: "ach-01",
-        code: "CC-AIOT-2502",
-        title: "Thùng rác thông minh hỗ trợ phân loại chai nhựa và vỏ lon tại hành lang",
-        category: "san-pham",
-        categoryLabel: "Sản phẩm ứng dụng",
-        year: "2025 - 2026",
-        award: "Giải Nhì Sáng tạo Trẻ & Đặt thử nghiệm tại dãy B",
-        team: "Nhóm HS lớp 12A1 & 10A3",
-        hardware: ["ESP32-CAM OV2640", "Siêu âm HC-SR04", "2x Động cơ Servo MG996R", "Python OpenCV"],
-        summary: "Thùng rác phát hiện khi có học sinh đưa rác lại gần bằng cảm biến siêu âm, chụp ảnh qua ESP32-CAM để phân biệt chai nhựa và vỏ lon nhôm, từ đó xoay tấm chắn Servo gạt vào đúng ngăn chứa rác tái chế.",
-        pinout: "HC-SR04 (TRIG/ECHO) -> GPIO12 / GPIO13\nServo Ngăn Nhựa     -> GPIO14 (PWM)\nServo Ngăn Vỏ Lon   -> GPIO15 (PWM)\nNguồn cấp           -> Adapter 5V - 2A ổn áp"
-      },
-      {
-        id: "ach-02",
         code: "CC-01",
         title: "Nhà Kính Thông Minh kết hợp chế độ hoạt động Offline",
         category: "san-pham",
@@ -850,45 +837,6 @@
         hardware: ["3 Yolo Uno ESP32-S3", "Cảm biến Ánh sáng", "Cảm biến Nhiệt độ", "Máy bơm mini", "Quạt 12V", "Cảm biến nhiệt độ", "đèn led 5V"],
         summary: "Sản phẩm ứng dụng trồng rau, các cảm biến cập nhật thông số liên tục và báo về App và Offline Web",
       },
-      {
-        id: "ach-03",
-        code: "CC-ROBO-2402",
-        title: "Xe Robot dò line kết hợp tay gắp vật cản tham gia giao lưu STEM Cụm Củ Chi",
-        category: "phong-trao",
-        categoryLabel: "Ngày hội & Giao lưu",
-        year: "2024 - 2025",
-        award: "Giải Ba Đua xe Robot dò line cấp Cụm",
-        team: "Đội tuyển Robot Khối 10 & 11",
-        hardware: ["Arduino Uno R3", "Mạch cầu H L298N", "Dãy 5 mắt hồng ngoại TCRT5000", "4x Động cơ giảm tốc V1", "Pin 18650"],
-        summary: "Xe tự hành bám theo vạch đen trên sa bàn thi đấu với thuật toán điều khiển tốc độ PWM hai bánh độc lập, vượt qua các khúc cua gấp và dừng đúng vạch đích để gắp khối lập phương.",
-        pinout: "Cảm biến Line 1..5  -> Chân A0, A1, A2, A3, A4\nL298N (ENA, IN1, IN2)-> Chân D5(PWM), D6, D7\nL298N (ENB, IN3, IN4)-> Chân D10(PWM), D8, D9\nNguồn động cơ       -> 2x Pin 18650 (7.4V)"
-      },
-      {
-        id: "ach-04",
-        code: "CC-AGRI-2403",
-        title: "Trạm đo nhiệt độ, độ ẩm và ánh sáng phục vụ vườn ươm hoa lan tại Củ Chi",
-        category: "khkt",
-        categoryLabel: "Cuộc thi KHKT & STEM",
-        year: "2024 - 2025",
-        award: "Giải Khuyến khích KHKT & Trưng bày cấp Huyện",
-        team: "Nhóm HS lớp 12A3",
-        hardware: ["ESP32", "Cảm biến ánh sáng BH1750", "Cảm biến SHT30", "Pin năng lượng mặt trời 6V", "Mạch sạc TP4056"],
-        summary: "Trạm quan trắc nhỏ gọn chạy bằng tấm pin năng lượng mặt trời 6V kèm pin sạc dự phòng, giúp nhà vườn trồng lan tại xã Tân An Hội theo dõi cường độ nắng và độ ẩm để điều chỉnh lưới che và phun sương.",
-        pinout: "BH1750 & SHT30 (I2C)-> SDA: GPIO21, SCL: GPIO22\nMạch sạc TP4056     -> Pin Li-ion 3.7V 2600mAh\nChế độ tiết kiệm pin-> ESP32 Deep Sleep (15 phút/lần)"
-      },
-      {
-        id: "ach-05",
-        code: "CC-FEST-2301",
-        title: "Tổ chức Gian hàng Trải nghiệm Lắp mạch & Hàn điện tử cho 400 học sinh toàn trường",
-        category: "phong-trao",
-        categoryLabel: "Ngày hội & Giao lưu",
-        year: "2023 - 2024",
-        award: "Bằng khen Đoàn trường THPT Củ Chi",
-        team: "Toàn thể 28 thành viên CLB STEM - AIOT",
-        hardware: ["12 bàn thực hành", "Bo mạch Arduino", "Mô hình đèn giao thông ngã tư", "Máy bắn bóng cơ học"],
-        summary: "Hoạt động thường niên vào học kỳ I giúp các bạn học sinh khối 10 mới vào trường được trực tiếp cầm thử đồng hồ đo điện, bấm nút điều khiển mô hình đèn giao thông và tìm hiểu cách lập trình vi điều khiển.",
-        pinout: "Hoạt động mở cửa tự do tại sân trường & phòng Lab dãy B.\nThu hút hơn 400 lượt học sinh tham gia trải nghiệm."
-      }
     ];
 
     const INITIAL_REGISTRATIONS = [];
