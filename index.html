@@ -41,7 +41,6 @@
       background: transparent;
     }
 
-    /* Thanh điều hướng nổi kiểu macOS Liquid Glass Capsule */
     .liquid-nav-bar {
       background: linear-gradient(135deg, rgba(255, 255, 255, 0.68) 0%, rgba(255, 255, 255, 0.44) 100%);
       backdrop-filter: blur(32px) saturate(210%);
@@ -54,7 +53,6 @@
         inset 0 -1px 1px 0 rgba(255, 255, 255, 0.55);
     }
 
-    /* Thẻ Liquid Glass tiêu chuẩn với viền phản quang (Specular Rim) */
     .flat-card {
       background: linear-gradient(145deg, rgba(255, 255, 255, 0.66) 0%, rgba(255, 255, 255, 0.42) 100%);
       backdrop-filter: blur(28px) saturate(195%);
@@ -78,7 +76,6 @@
         inset 0 -1px 1px 0 rgba(255, 255, 255, 0.6);
     }
 
-    /* Thẻ Liquid Glass nổi bật (Hero card, Form chính, Cửa sổ Modal) */
     .flat-card-strong {
       background: linear-gradient(155deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.54) 100%);
       backdrop-filter: blur(36px) saturate(210%);
@@ -92,7 +89,6 @@
         inset 0 -1px 1px 0 rgba(255, 255, 255, 0.55);
     }
 
-    /* Nút bấm Liquid Glass xanh ngọc lục bảo (Tuyệt đối KHÔNG dùng gradient tím) */
     .btn-primary-green {
       background-color: rgba(13, 148, 136, 0.92);
       color: #FFFFFF;
@@ -119,7 +115,6 @@
       transform: translateY(0);
     }
 
-    /* Nút phụ Liquid Glass xanh biển đậm (Không màu tím) */
     .btn-secondary-navy {
       background-color: rgba(3, 105, 161, 0.88);
       color: #FFFFFF;
@@ -138,7 +133,6 @@
       transform: translateY(-1px);
     }
 
-    /* Nút thủy tinh trong suốt (Clear Liquid Glass Pill) */
     .btn-outline-flat {
       background: rgba(255, 255, 255, 0.60);
       color: #0F172A;
@@ -161,7 +155,6 @@
         inset 0 1px 1.5px 0 rgba(255, 255, 255, 1);
     }
 
-    /* Trạng thái nút lọc đang chọn (Dark Vibrancy Glass) */
     .btn-filter-active {
       background: rgba(15, 23, 42, 0.84) !important;
       color: #FFFFFF !important;
@@ -171,7 +164,6 @@
         inset 0 1px 1px 0 rgba(255, 255, 255, 0.35) !important;
     }
 
-    /* Ô nhập liệu Liquid Glass */
     .input-flat {
       background: rgba(255, 255, 255, 0.64);
       backdrop-filter: blur(18px);
@@ -193,7 +185,6 @@
       box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.18), inset 0 1px 1px rgba(255, 255, 255, 1);
     }
 
-    /* Khung Terminal / Code kiểu macOS Dark Glass */
     .liquid-dark-terminal {
       background: linear-gradient(155deg, rgba(15, 23, 42, 0.88) 0%, rgba(15, 23, 42, 0.78) 100%);
       backdrop-filter: blur(24px) saturate(180%);
@@ -213,7 +204,6 @@
 </head>
 <body class="min-h-screen flex flex-col selection:bg-green-200 selection:text-green-950">
 
-  <!-- Thanh thông tin trường phía trên cùng kiểu macOS Status Bar -->
   <div class="bg-slate-900/75 backdrop-blur-xl text-slate-100 text-xs border-b border-white/20">
     <div class="max-w-6xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2">
       <div class="flex items-center gap-4 font-mono-tech text-slate-300">
@@ -224,7 +214,6 @@
     </div>
   </div>
 
-  <!-- Header & Thanh điều hướng nổi kiểu Liquid Glass -->
   <header class="sticky top-3 z-30 px-3 sm:px-4 pt-2">
     <div class="max-w-6xl mx-auto liquid-nav-bar rounded-full px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
       <a href="#gioi-thieu" class="flex items-center gap-3 group">
@@ -237,7 +226,6 @@
         </div>
       </a>
 
-      <!-- Menu máy tính -->
       <nav class="hidden md:flex items-center gap-1" aria-label="Điều hướng chính">
         <a href="#gioi-thieu" class="px-3.5 py-2 text-sm font-medium text-slate-800 hover:bg-white/65 rounded-full transition-colors">1. Giới thiệu & Hoạt động</a>
         <a href="#thanh-tich" class="px-3.5 py-2 text-sm font-medium text-slate-800 hover:bg-white/65 rounded-full transition-colors">2. Thành tích & Sản phẩm</a>
@@ -245,7 +233,6 @@
         <a href="#dang-ky" class="ml-2 btn-primary-green px-4 py-2 text-sm">Đăng ký ngay</a>
       </nav>
 
-      <!-- Nút mở menu điện thoại -->
       <div class="flex items-center gap-2 md:hidden">
         <button type="button" id="btnMobileToggle" class="btn-outline-flat px-3.5 py-1.5 text-sm font-mono-tech" aria-label="Mở menu">
           Menu ☰
@@ -253,7 +240,6 @@
       </div>
     </div>
 
-    <!-- Menu thu gọn trên điện thoại -->
     <div id="mobileMenuPanel" class="hidden md:hidden max-w-6xl mx-auto mt-2 flat-card-strong px-4 py-3 space-y-2">
       <a href="#gioi-thieu" class="mobile-nav-link block px-3.5 py-2 text-sm font-medium text-slate-800 hover:bg-white/60 rounded-xl">1. Giới thiệu & Hoạt động</a>
       <a href="#thanh-tich" class="mobile-nav-link block px-3.5 py-2 text-sm font-medium text-slate-800 hover:bg-white/60 rounded-xl">2. Thành tích & Sản phẩm</a>
@@ -265,13 +251,10 @@
   </header>
 
   <main class="flex-1">
-    <!-- ==========================================
-         PHẦN 1: GIỚI THIỆU (INTRODUCTION)
-         ========================================== -->
+
     <section id="gioi-thieu" class="tech-grid-bg py-10 sm:py-14">
       <div class="max-w-6xl mx-auto px-4">
         
-        <!-- Khối mở đầu kiểu Liquid Glass -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <div class="lg:col-span-7 space-y-5">
             <div class="inline-flex items-center gap-2 bg-white/65 backdrop-blur-md border border-white/90 shadow-sm px-3.5 py-1.5 rounded-full text-xs font-mono-tech text-slate-800">
@@ -288,7 +271,6 @@
               Chào mừng các bạn đến với CLB Stem AIOT của trường THPT Củ Chi! Đây là nơi các bạn học sinh yêu thích công nghệ, lập trình, điện tử và IoT có thể cùng nhau học hỏi, thực hành và phát triển các dự án.
             </p>
 
-            <!-- Tóm tắt thông tin nhanh dạng bảng kỹ thuật -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
               <div class="flat-card p-3">
                 <div class="text-xs font-mono-tech text-zinc-500">THÀNH VIÊN</div>
@@ -322,7 +304,6 @@
             </div>
           </div>
 
-          <!-- Cột hình ảnh thực tế bàn thực hành CLB kiểu cửa sổ macOS Liquid Glass -->
           <div class="lg:col-span-5">
             <div class="flat-card-strong overflow-hidden p-2.5">
               <div class="px-3 py-2 text-xs font-mono-tech flex items-center justify-between text-slate-700">
@@ -348,7 +329,7 @@
           </div>
         </div>
 
-        <!-- Ba mảng hoạt động chính tại CLB -->
+
         <div class="mt-12">
           <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-zinc-300 pb-3 mb-6">
             <div>
@@ -358,7 +339,6 @@
           </div>
 
           <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-5">
-            <!-- Ban 1 -->
             <div class="flat-card p-5 flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between gap-2 mb-3">
@@ -382,7 +362,6 @@
               </div>
             </div>
 
-            <!-- Ban 2 -->
             <div class="flat-card p-5 flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between gap-2 mb-3">
@@ -412,9 +391,6 @@
       </div>
     </section>
 
-    <!-- ==========================================
-         PHẦN 2: THÀNH TÍCH & SẢN PHẨM (ACHIEVEMENTS)
-         ========================================== -->
     <section id="thanh-tich" class="py-12 sm:py-16">
       <div class="max-w-6xl mx-auto px-4">
         
@@ -429,7 +405,6 @@
           
         </div>
 
-        <!-- Điểm nhấn dự án thực tế có hình chụp mô hình kiểu Liquid Glass -->
         <div class="mt-6 flat-card-strong p-5 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
           <div class="lg:col-span-5">
             <div class="border border-white/90 bg-white/60 rounded-2xl overflow-hidden shadow-sm p-2">
@@ -469,7 +444,6 @@
           </div>
         </div>
 
-        <!-- Thanh công cụ lọc & tìm kiếm thành tích -->
         <div class="mt-8 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
           <div class="flex items-center gap-2">
             <select id="selectAchYear" aria-label="Lọc theo năm học" class="input-flat text-xs font-mono-tech w-auto py-1.5">
@@ -487,12 +461,9 @@
           </div>
         </div>
 
-        <!-- Lưới hiển thị các thẻ Thành tích & Dự án -->
         <div id="achievementsGrid" class="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          <!-- Render bằng JavaScript -->
         </div>
 
-        <!-- Trạng thái trống khi lọc không khớp -->
         <div id="achievementsEmptyState" class="hidden mt-6 flat-card p-8 text-center">
           <p class="text-sm text-zinc-600">Không tìm thấy dự án hoặc thành tích nào khớp với bộ lọc hiện tại.</p>
           <button type="button" id="btnResetAchFilter" class="mt-3 btn-outline-flat px-4 py-1.5 text-xs font-mono-tech">
@@ -503,9 +474,7 @@
       </div>
     </section>
 
-    <!-- ==========================================
-         PHẦN 3: CHỖ ĐIỀN ĐƠN ĐĂNG KÝ (REGISTRATION)
-         ========================================== -->
+
     <section id="dang-ky" class="py-12 sm:py-16 tech-grid-bg">
       <div class="max-w-6xl mx-auto px-4">
         
@@ -519,7 +488,6 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          <!-- Cột trái: Form điền đơn đăng ký (7 cột) -->
           <div class="lg:col-span-7 flat-card-strong p-5 sm:p-7">
             <div class="flex items-center justify-between border-b border-zinc-300 pb-3 mb-5">
               <div class="font-mono-tech text-xs font-bold text-zinc-800">
@@ -528,7 +496,6 @@
               <span class="text-xs text-zinc-600">* Thông tin bắt buộc</span>
             </div>
 
-            <!-- Thông báo gửi đơn thành công (ẩn mặc định) -->
             <div id="regSuccessBanner" class="hidden mb-6 p-4 bg-green-50 border-2 border-green-800 rounded">
               <div class="flex items-start justify-between gap-3">
                 <div>
@@ -545,13 +512,11 @@
               </div>
             </div>
 
-            <!-- Thông báo lỗi kiểm tra form (ẩn mặc định) -->
             <div id="regErrorBanner" class="hidden mb-5 p-3.5 bg-red-50 border border-red-700 text-red-900 text-xs rounded font-medium">
               Vui lòng kiểm tra lại các trường thông tin bắt buộc.
             </div>
 
             <form id="clubRegistrationForm" class="space-y-4" novalidate>
-              <!-- Họ tên & Lớp -->
               <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
                 <div class="sm:col-span-7">
                   <label for="regFullName" class="block text-xs font-semibold text-zinc-800 mb-1">
@@ -591,7 +556,6 @@
                 </div>
               </div>
 
-              <!-- Số điện thoại / Zalo & Email -->
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label for="regPhone" class="block text-xs font-semibold text-zinc-800 mb-1">
@@ -618,7 +582,6 @@
                 </div>
               </div>
 
-              <!-- Chọn Ban chuyên môn -->
               <div>
                 <label for="regDepartment" class="block text-xs font-semibold text-zinc-800 mb-1">
                   Ban chuyên môn bạn muốn đăng ký <span class="text-red-700">*</span>
@@ -629,7 +592,6 @@
                 </select>
               </div>
 
-              <!-- Mức độ kinh nghiệm & Lịch sinh hoạt -->
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label for="regExperience" class="block text-xs font-semibold text-zinc-800 mb-1">
@@ -643,7 +605,6 @@
                 </div>
               </div>
 
-              <!-- Lý do đăng ký / Ý tưởng muốn làm (kèm nút điền nhanh) -->
               <div>
                 <div class="flex flex-wrap items-center justify-between gap-1 mb-1">
                   <label for="regMotivation" class="block text-xs font-semibold text-zinc-800">
@@ -652,7 +613,6 @@
                   <span class="text-xs text-zinc-500">Bấm gợi ý nhanh nếu bạn chưa biết viết gì:</span>
                 </div>
 
-                <!-- Các nút gợi ý điền nhanh (Solid Flat Chips) -->
                 <div class="flex flex-wrap gap-1.5 mb-2">
                   <button type="button" data-prompt-fill="Mình chưa từng làm mạch điện tử bao giờ nên muốn học cách cắm mạch Arduino, đọc cảm biến và tự làm một mô hình tưới cây tự động tại nhà." class="prompt-chip-btn btn-outline-flat px-2.5 py-1 text-xs">
                     + Muốn học lắp mạch từ đầu
@@ -674,7 +634,6 @@
                 ></textarea>
               </div>
 
-              <!-- Cam kết -->
               <div class="pt-1">
                 <label class="flex items-start gap-2.5 text-xs text-zinc-700 cursor-pointer">
                   <input type="checkbox" id="regConsent" checked class="mt-0.5 h-4 w-4 accent-green-800 rounded-sm" />
@@ -684,7 +643,6 @@
                 </label>
               </div>
 
-              <!-- Nút Gửi đơn & Xóa trắng (tuyệt đối không gradient tím) -->
               <div class="pt-3 flex flex-wrap items-center gap-3 border-t border-zinc-200">
                 <button type="submit" id="btnSubmitRegistration" class="btn-primary-green px-6 py-2.5 text-sm">
                   Gửi đơn đăng ký vào CLB
@@ -696,10 +654,8 @@
             </form>
           </div>
 
-          <!-- Cột phải: Quy trình xét duyệt & Danh sách đơn đã ghi nhận trực tiếp (5 cột) -->
           <div class="lg:col-span-5 space-y-5">
             
-            <!-- Hộp quy trình 3 bước -->
             <div class="flat-card p-5">
               <div class="font-mono-tech text-xs font-bold text-green-800 uppercase mb-2">Quy trình tiếp nhận thành viên</div>
               <ol class="space-y-3 text-xs sm:text-sm text-zinc-700">
@@ -718,7 +674,6 @@
               </ol>
             </div>
 
-            <!-- Hộp thông tin hỗ trợ & lịch sinh hoạt phòng Lab -->
             <div class="flat-card p-5 space-y-4">
               <div class="flex items-center justify-between gap-2 border-b border-white/70 pb-3">
                 <div>
@@ -762,7 +717,6 @@
     </section>
   </main>
 
-  <!-- Chân trang (Footer) kiểu Dark Liquid Glass -->
   <footer class="bg-slate-900/80 backdrop-blur-2xl text-slate-200 border-t border-white/20 py-10 text-xs mt-8">
     <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
       <div>
@@ -786,9 +740,6 @@
     </div>
   </footer>
 
-  <!-- ==========================================
-       MODAL 1: CHI TIẾT KỸ THUẬT CỦA DỰ ÁN / THÀNH TÍCH
-       ========================================== -->
   <div id="modalProjectDetail" class="fixed inset-0 z-50 hidden bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4">
     <div class="flat-card-strong max-w-2xl w-full max-h-[90vh] overflow-y-auto p-5 sm:p-7">
       <div class="flex items-start justify-between gap-3 border-b border-zinc-300 pb-3">
@@ -842,9 +793,6 @@
   </div>
 
   <script>
-    // ====================================================
-    // 1. MENU ĐIỆN THOẠI (ĐẶT ĐẦU TIÊN ĐỂ LUÔN HOẠT ĐỘNG)
-    // ====================================================
     const btnMobileToggle = document.getElementById("btnMobileToggle");
     const mobileMenuPanel = document.getElementById("mobileMenuPanel");
 
@@ -875,9 +823,6 @@
       });
     }
 
-    // ====================================================
-    // 2. DỮ LIỆU KHỞI TẠO THÀNH TÍCH & ĐƠN ĐĂNG KÝ
-    // ====================================================
     const INITIAL_ACHIEVEMENTS = [
       {
         id: "ach-01",
@@ -994,7 +939,6 @@
         .replace(/'/g, "&#039;");
     }
 
-    // Nút chọn nhanh Ban chuyên môn từ Phần 1 cuộn xuống Phần 3
     document.querySelectorAll(".btn-pick-dept").forEach((btn) => {
       btn.addEventListener("click", () => {
         const dept = btn.getAttribute("data-select-dept");
@@ -1009,9 +953,6 @@
       });
     });
 
-    // ====================================================
-    // 3. HIỂN THỊ & LỌC DANH SÁCH THÀNH TÍCH (PHẦN 2)
-    // ====================================================
     const achievementsGrid = document.getElementById("achievementsGrid");
     const achievementsEmptyState = document.getElementById("achievementsEmptyState");
 
@@ -1102,7 +1043,6 @@
       renderAchievements();
     });
 
-    // Modal chi tiết dự án
     const modalProjectDetail = document.getElementById("modalProjectDetail");
     function openProjectDetailModal(achId) {
       const item = achievements.find((a) => a.id === achId);
@@ -1146,9 +1086,6 @@
       }
     });
 
-    // ====================================================
-    // 4. XỬ LÝ ĐƠN ĐĂNG KÝ (PHẦN 3)
-    // ====================================================
     const clubRegistrationForm = document.getElementById("clubRegistrationForm");
     const regSuccessBanner = document.getElementById("regSuccessBanner");
     const regErrorBanner = document.getElementById("regErrorBanner");
@@ -1235,7 +1172,6 @@
       regSuccessBanner?.classList.add("hidden");
     });
 
-    // Khởi chạy hiển thị ban đầu
     renderAchievements();
   </script>
 </body>
