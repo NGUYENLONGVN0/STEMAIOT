@@ -408,6 +408,10 @@
 
       
 
+        </div>
+      </div>
+    </section>
+
     <!-- ==========================================
          PHẦN 2: THÀNH TÍCH & SẢN PHẨM (ACHIEVEMENTS)
          ========================================== -->
@@ -839,93 +843,41 @@
 
   <script>
     // ====================================================
-    // 1. DỮ LIỆU KHỞI TẠO (THỰC TẾ, KHÔNG SÁO RỖNG)
+    // 1. MENU ĐIỆN THOẠI (ĐẶT ĐẦU TIÊN ĐỂ LUÔN HOẠT ĐỘNG)
     // ====================================================
-    const STAGE_DATA = {
-      "1": {
-        badge: "KHỐI 01: CẢM BIẾN ĐẦU VÀO (SENSORS)",
-        title: "Thu thập thông số môi trường thực tế tại trường / vườn",
-        desc: "Các cảm biến chuyển đổi đại lượng vật lý (nhiệt độ không khí, độ ẩm đất trồng rau, nồng độ khói/gas hoặc khoảng cách) thành tín hiệu điện áp Analog (0–3.3V) hoặc Digital để vi điều khiển đọc được.",
-        parts: ["DHT11 / DHT22", "Cảm biến độ ẩm đất điện dung", "Siêu âm HC-SR04", "Camera ESP32-CAM OV2640"],
-        filename: "doc_cam_bien_do_am.ino",
-        code: `const int PIN_DO_AM_DAT = 34; // Chân Analog GPIO34 trên ESP32
+    const btnMobileToggle = document.getElementById("btnMobileToggle");
+    const mobileMenuPanel = document.getElementById("mobileMenuPanel");
 
-void setup() {
-  Serial.begin(115200);
-  pinMode(PIN_DO_AM_DAT, INPUT);
-}
+    if (btnMobileToggle && mobileMenuPanel) {
+      btnMobileToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isHidden = mobileMenuPanel.classList.toggle("hidden");
+        btnMobileToggle.textContent = isHidden ? "Menu ☰" : "Đóng ✕";
+        btnMobileToggle.setAttribute("aria-expanded", String(!isHidden));
+      });
 
-void loop() {
-  int giaTriADC = analogRead(PIN_DO_AM_DAT);
-  int phanTramAm = map(giaTriADC, 4095, 1500, 0, 100);
-  Serial.print("Độ ẩm đất hiện tại: ");
-  Serial.print(phanTramAm);
-  Serial.println("%");
-  delay(2000);
-}`
-      },
-      "2": {
-        badge: "KHỐI 02: VI ĐIỀU KHIỂN TRUNG TÂM (MCU)",
-        title: "Đọc dữ liệu cảm biến và truyền qua Wi-Fi nội bộ",
-        desc: "Bo mạch ESP32 hoặc Arduino Uno đóng vai trò bộ não của mô hình: vừa đọc dữ liệu từ nhiều cảm biến cùng lúc, vừa hiển thị lên màn hình LCD tại chỗ và gửi bản tin JSON qua Wi-Fi.",
-        parts: ["ESP32 NodeMCU 30 chân", "Arduino Uno R3", "Breadboard 830 lỗ", "Dây cắm Dupont"],
-        filename: "ket_noi_wifi_esp32.ino",
-        code: `#include <WiFi.h>
-#include <HTTPClient.h>
+      document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenuPanel.classList.add("hidden");
+          btnMobileToggle.textContent = "Menu ☰";
+          btnMobileToggle.setAttribute("aria-expanded", "false");
+        });
+      });
 
-const char* ssid = "THPT_CuChi_STEM_Lab";
-const char* pass = "cuchi2026";
+      document.addEventListener("click", (e) => {
+        if (!mobileMenuPanel.classList.contains("hidden") &&
+            !mobileMenuPanel.contains(e.target) &&
+            !btnMobileToggle.contains(e.target)) {
+          mobileMenuPanel.classList.add("hidden");
+          btnMobileToggle.textContent = "Menu ☰";
+          btnMobileToggle.setAttribute("aria-expanded", "false");
+        }
+      });
+    }
 
-void setup() {
-  Serial.begin(115200);
-  WiFi.begin(ssid, pass);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("\\nĐã kết nối Wi-Fi phòng Lab!");
-}`
-      },
-      "3": {
-        badge: "KHỐI 03: XỬ LÝ LOGIC & THỊ GIÁC MÁY TÍNH (AI)",
-        title: "Phân tích ngưỡng tự động hoặc nhận diện vật thể bằng Python",
-        desc: "Với các bài toán phân loại rác nhựa/vỏ lon hoặc phát hiện khói sớm, hình ảnh từ camera ESP32-CAM được gửi về máy tính chạy Python + OpenCV để khoanh vùng vật thể và trả kết quả điều khiển về mạch.",
-        parts: ["Python 3.11", "Thư viện OpenCV", "Mô hình phân loại nhẹ", "Giao thức HTTP / MQTT"],
-        filename: "nhan_dien_chai_nhua.py",
-        code: `import cv2
-
-# Đọc luồng hình ảnh từ ESP32-CAM tại phòng thực hành
-cap = cv2.VideoCapture("http://192.168.1.45:81/stream")
-
-while True:
-    ret, frame = cap.read()
-    if not ret:
-        break
-    # Xử lý khung hình và gửi tín hiệu mở nắp thùng rác
-    cv2.imshow("Camera CLB STEM THPT Cu Chi", frame)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break`
-      },
-      "4": {
-        badge: "KHỐI 04: CƠ CẤU CHẤP HÀNH & BẢNG ĐIỀU KHIỂN",
-        title: "Tự động đóng ngắt bơm nước, xoay động cơ Servo & báo còi",
-        desc: "Khi điều kiện thỏa mãn (ví dụ đất khô dưới 45% hoặc phát hiện chai nhựa), vi điều khiển kích hoạt Relay 5V để bật máy bơm nước, quay góc động cơ Servo SG90 để mở nắp thùng rác và cập nhật trạng thái lên màn hình.",
-        parts: ["Module Relay 2 kênh 5V", "Bơm chìm mini 5V-12V", "Động cơ Servo SG90", "Màn hình LCD 1602 I2C"],
-        filename: "dieu_khien_relay_bom.ino",
-        code: `const int PIN_RELAY_BOM = 26;
-
-void capNhatBomNuoc(int doAmDat) {
-  if (doAmDat < 45) {
-    digitalWrite(PIN_RELAY_BOM, LOW);  // Kích hoạt Relay bật bơm
-    Serial.println("TRẠNG THÁI: Đang bơm tưới nước...");
-  } else if (doAmDat >= 70) {
-    digitalWrite(PIN_RELAY_BOM, HIGH); // Ngắt bơm khi đủ ẩm
-    Serial.println("TRẠNG THÁI: Đã ngắt bơm.");
-  }
-}`
-      }
-    };
-
+    // ====================================================
+    // 2. DỮ LIỆU KHỞI TẠO THÀNH TÍCH & ĐƠN ĐĂNG KÝ
+    // ====================================================
     const INITIAL_ACHIEVEMENTS = [
       {
         id: "ach-01",
@@ -1007,10 +959,7 @@ void capNhatBomNuoc(int doAmDat) {
       }
     ];
 
-
-    // ====================================================
-    // 2. QUẢN LÝ TRẠNG THÁI & LOCALSTORAGE AN TOÀN
-    // ====================================================
+    const INITIAL_REGISTRATIONS = [];
     const STORAGE_KEY_ACH = "thpt_cuchi_stem_achievements_v1";
     const STORAGE_KEY_REG = "thpt_cuchi_stem_registrations_v1";
 
@@ -1028,14 +977,11 @@ void capNhatBomNuoc(int doAmDat) {
     function saveStoredData(key, data) {
       try {
         localStorage.setItem(key, JSON.stringify(data));
-      } catch (e) {
-        // Bỏ qua nếu trình duyệt chặn localStorage trong iframe
-      }
+      } catch (e) {}
     }
 
     let achievements = loadStoredData(STORAGE_KEY_ACH, INITIAL_ACHIEVEMENTS);
     let registrations = loadStoredData(STORAGE_KEY_REG, INITIAL_REGISTRATIONS);
-    let currentAchCategory = "all";
     let currentAchYear = "all";
     let currentAchSearch = "";
 
@@ -1048,47 +994,6 @@ void capNhatBomNuoc(int doAmDat) {
         .replace(/'/g, "&#039;");
     }
 
-    // ====================================================
-    // 3. XỬ LÝ SƠ ĐỒ 4 KHỐI AIoT TƯƠNG TÁC (PHẦN 1)
-    // ====================================================
-    const stageButtons = document.querySelectorAll(".stage-tab-btn");
-    const stageDetailBadge = document.getElementById("stageDetailBadge");
-    const stageDetailTitle = document.getElementById("stageDetailTitle");
-    const stageDetailDesc = document.getElementById("stageDetailDesc");
-    const stageDetailParts = document.getElementById("stageDetailParts");
-    const stageCodeFilename = document.getElementById("stageCodeFilename");
-    const stageCodeSnippet = document.getElementById("stageCodeSnippet");
-
-    function selectStage(stageKey) {
-      const data = STAGE_DATA[stageKey];
-      if (!data) return;
-
-      stageButtons.forEach((btn) => {
-        const isCurrent = btn.getAttribute("data-stage") === stageKey;
-        if (isCurrent) {
-          btn.className = "stage-tab-btn flat-card-strong p-3.5 text-left ring-2 ring-teal-600/70";
-        } else {
-          btn.className = "stage-tab-btn flat-card p-3.5 text-left hover:bg-white/75";
-        }
-      });
-
-      stageDetailBadge.textContent = data.badge;
-      stageDetailTitle.textContent = data.title;
-      stageDetailDesc.textContent = data.desc;
-      stageCodeFilename.textContent = data.filename;
-      stageCodeSnippet.textContent = data.code;
-
-      stageDetailParts.innerHTML = data.parts
-        .map((p) => `<span class="bg-white/80 border border-white px-2.5 py-1 rounded-full shadow-sm">${escapeHtml(p)}</span>`)
-        .join("");
-    }
-
-    stageButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        selectStage(btn.getAttribute("data-stage"));
-      });
-    });
-
     // Nút chọn nhanh Ban chuyên môn từ Phần 1 cuộn xuống Phần 3
     document.querySelectorAll(".btn-pick-dept").forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -1097,10 +1002,7 @@ void capNhatBomNuoc(int doAmDat) {
         if (selectEl && dept) {
           selectEl.value = dept;
         }
-        const formSection = document.getElementById("dang-ky");
-        if (formSection) {
-          formSection.scrollIntoView({ behavior: "smooth" });
-        }
+        document.getElementById("dang-ky")?.scrollIntoView({ behavior: "smooth" });
         setTimeout(() => {
           document.getElementById("regFullName")?.focus();
         }, 450);
@@ -1108,42 +1010,31 @@ void capNhatBomNuoc(int doAmDat) {
     });
 
     // ====================================================
-    // 4. HIỂN THỊ & LỌC DANH SÁCH THÀNH TÍCH (PHẦN 2)
+    // 3. HIỂN THỊ & LỌC DANH SÁCH THÀNH TÍCH (PHẦN 2)
     // ====================================================
     const achievementsGrid = document.getElementById("achievementsGrid");
     const achievementsEmptyState = document.getElementById("achievementsEmptyState");
-    const countAllAch = document.getElementById("countAllAch");
 
     function renderAchievements() {
-      if (countAllAch) {
-        countAllAch.textContent = String(achievements.length);
-      }
+      if (!achievementsGrid) return;
 
       const query = currentAchSearch.trim().toLowerCase();
       const filtered = achievements.filter((item) => {
-        const matchCat = currentAchCategory === "all" || item.category === currentAchCategory;
         const matchYear = currentAchYear === "all" || item.year === currentAchYear;
         const haystack = `${item.title} ${item.award} ${item.team} ${(item.hardware || []).join(" ")} ${item.summary}`.toLowerCase();
         const matchSearch = !query || haystack.includes(query);
-        return matchCat && matchYear && matchSearch;
+        return matchYear && matchSearch;
       });
 
       if (filtered.length === 0) {
         achievementsGrid.innerHTML = "";
-        achievementsEmptyState.classList.remove("hidden");
+        achievementsEmptyState?.classList.remove("hidden");
         return;
       }
 
-      achievementsEmptyState.classList.add("hidden");
+      achievementsEmptyState?.classList.add("hidden");
       achievementsGrid.innerHTML = filtered
         .map((item) => {
-          const catBadgeStyle =
-            item.category === "khkt"
-              ? "bg-teal-500/15 text-teal-900 border-teal-500/30"
-              : item.category === "san-pham"
-              ? "bg-sky-500/15 text-sky-900 border-sky-500/30"
-              : "bg-amber-500/15 text-amber-900 border-amber-500/30";
-
           const hwChips = (item.hardware || [])
             .slice(0, 4)
             .map((hw) => `<span class="bg-white/75 border border-white px-2.5 py-0.5 rounded-full text-slate-700 shadow-sm">${escapeHtml(hw)}</span>`)
@@ -1153,7 +1044,7 @@ void capNhatBomNuoc(int doAmDat) {
             <article class="flat-card p-5 flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between gap-2 mb-3 font-mono-tech text-xs">
-                  <span class="px-2.5 py-0.5 border rounded-full font-medium ${catBadgeStyle}">${escapeHtml(item.categoryLabel)}</span>
+                  <span class="text-teal-800 font-semibold">${escapeHtml(item.code || "CC-STEM")}</span>
                   <span class="text-slate-500">${escapeHtml(item.year)}</span>
                 </div>
                 <h3 class="text-base font-bold text-slate-900 leading-snug mb-2.5">${escapeHtml(item.title)}</h3>
@@ -1184,46 +1075,30 @@ void capNhatBomNuoc(int doAmDat) {
         })
         .join("");
 
-      // Gắn sự kiện mở modal chi tiết kỹ thuật
       document.querySelectorAll(".btn-open-ach-detail").forEach((btn) => {
         btn.addEventListener("click", () => {
-          const achId = btn.getAttribute("data-view-ach");
-          openProjectDetailModal(achId);
+          openProjectDetailModal(btn.getAttribute("data-view-ach"));
         });
       });
     }
 
-    // Lọc theo danh mục
-    document.querySelectorAll(".ach-cat-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        currentAchCategory = btn.getAttribute("data-ach-cat") || "all";
-        document.querySelectorAll(".ach-cat-btn").forEach((b) => {
-          b.classList.toggle("btn-filter-active", b === btn);
-        });
-        renderAchievements();
-      });
-    });
-
-    // Lọc theo năm học & từ khóa
-    document.getElementById("selectAchYear").addEventListener("change", (e) => {
+    document.getElementById("selectAchYear")?.addEventListener("change", (e) => {
       currentAchYear = e.target.value;
       renderAchievements();
     });
 
-    document.getElementById("inputSearchAch").addEventListener("input", (e) => {
+    document.getElementById("inputSearchAch")?.addEventListener("input", (e) => {
       currentAchSearch = e.target.value;
       renderAchievements();
     });
 
-    document.getElementById("btnResetAchFilter").addEventListener("click", () => {
-      currentAchCategory = "all";
+    document.getElementById("btnResetAchFilter")?.addEventListener("click", () => {
       currentAchYear = "all";
       currentAchSearch = "";
-      document.getElementById("selectAchYear").value = "all";
-      document.getElementById("inputSearchAch").value = "";
-      document.querySelectorAll(".ach-cat-btn").forEach((b) => {
-        b.classList.toggle("btn-filter-active", b.getAttribute("data-ach-cat") === "all");
-      });
+      const selectYear = document.getElementById("selectAchYear");
+      const inputSearch = document.getElementById("inputSearchAch");
+      if (selectYear) selectYear.value = "all";
+      if (inputSearch) inputSearch.value = "";
       renderAchievements();
     });
 
@@ -1231,7 +1106,7 @@ void capNhatBomNuoc(int doAmDat) {
     const modalProjectDetail = document.getElementById("modalProjectDetail");
     function openProjectDetailModal(achId) {
       const item = achievements.find((a) => a.id === achId);
-      if (!item) return;
+      if (!item || !modalProjectDetail) return;
 
       document.getElementById("modalProjCode").textContent = item.code || "CC-STEM";
       document.getElementById("modalProjTitle").textContent = item.title;
@@ -1248,13 +1123,13 @@ void capNhatBomNuoc(int doAmDat) {
       modalProjectDetail.classList.remove("hidden");
     }
 
-    document.getElementById("btnCloseProjectModal").addEventListener("click", () => {
-      modalProjectDetail.classList.add("hidden");
+    document.getElementById("btnCloseProjectModal")?.addEventListener("click", () => {
+      modalProjectDetail?.classList.add("hidden");
     });
 
-    document.getElementById("btnModalRegisterSimilar").addEventListener("click", () => {
-      const title = document.getElementById("modalProjTitle").textContent;
-      modalProjectDetail.classList.add("hidden");
+    document.getElementById("btnModalRegisterSimilar")?.addEventListener("click", () => {
+      const title = document.getElementById("modalProjTitle")?.textContent || "";
+      modalProjectDetail?.classList.add("hidden");
       const motivationEl = document.getElementById("regMotivation");
       if (motivationEl) {
         motivationEl.value = `Mình rất ấn tượng với dự án "${title}" và muốn đăng ký vào CLB để học cách lắp mạch, lập trình làm mô hình tương tự.`;
@@ -1265,151 +1140,19 @@ void capNhatBomNuoc(int doAmDat) {
       }, 400);
     });
 
-    // Modal thêm thành tích mới
-    const modalAddAchievement = document.getElementById("modalAddAchievement");
-    document.getElementById("btnOpenAddAchievement").addEventListener("click", () => {
-      modalAddAchievement.classList.remove("hidden");
-    });
-    document.getElementById("btnCloseAddAchievement").addEventListener("click", () => {
-      modalAddAchievement.classList.add("hidden");
-    });
-    document.getElementById("btnCancelAddAchievement").addEventListener("click", () => {
-      modalAddAchievement.classList.add("hidden");
-    });
-
-    document.getElementById("formAddAchievement").addEventListener("submit", (e) => {
-      e.preventDefault();
-      const title = document.getElementById("newAchTitle").value.trim();
-      const category = document.getElementById("newAchCategory").value;
-      const year = document.getElementById("newAchYear").value;
-      const award = document.getElementById("newAchAward").value.trim();
-      const team = document.getElementById("newAchTeam").value.trim();
-      const hwRaw = document.getElementById("newAchHardware").value.trim();
-      const summary = document.getElementById("newAchSummary").value.trim();
-
-      if (!title || !award || !team || !summary) return;
-
-      const catLabels = {
-        "khkt": "Cuộc thi KHKT & STEM",
-        "san-pham": "Sản phẩm ứng dụng",
-        "phong-trao": "Ngày hội & Giao lưu"
-      };
-
-      const newItem = {
-        id: "ach-" + Date.now(),
-        code: "CC-STEM-" + String(achievements.length + 1).padStart(2, "0"),
-        title,
-        category,
-        categoryLabel: catLabels[category] || "Sản phẩm STEM",
-        year,
-        award,
-        team,
-        hardware: hwRaw ? hwRaw.split(",").map((s) => s.trim()).filter(Boolean) : ["ESP32", "Cảm biến"],
-        summary,
-        pinout: "Sơ đồ đấu nối lưu tại hồ sơ kỹ thuật Phòng Lab Vật lý - Công nghệ THPT Củ Chi."
-      };
-
-      achievements.unshift(newItem);
-      saveStoredData(STORAGE_KEY_ACH, achievements);
-      renderAchievements();
-      e.target.reset();
-      modalAddAchievement.classList.add("hidden");
+    modalProjectDetail?.addEventListener("click", (e) => {
+      if (e.target === modalProjectDetail) {
+        modalProjectDetail.classList.add("hidden");
+      }
     });
 
     // ====================================================
-    // 5. XỬ LÝ ĐƠN ĐĂNG KÝ & DANH SÁCH ĐƠN (PHẦN 3)
+    // 4. XỬ LÝ ĐƠN ĐĂNG KÝ (PHẦN 3)
     // ====================================================
     const clubRegistrationForm = document.getElementById("clubRegistrationForm");
     const regSuccessBanner = document.getElementById("regSuccessBanner");
     const regErrorBanner = document.getElementById("regErrorBanner");
-    const recentRegistrationsList = document.getElementById("recentRegistrationsList");
-    const rosterTableBody = document.getElementById("rosterTableBody");
-    const inputQuickSearchReg = document.getElementById("inputQuickSearchReg");
 
-    function updateRegistrationBadges() {
-      const count = String(registrations.length);
-      document.getElementById("navRegCountBadge").textContent = count;
-      document.getElementById("mobileRegCountBadge").textContent = count;
-      document.getElementById("sideRegCount").textContent = count;
-    }
-
-    function renderRegistrationsList() {
-      updateRegistrationBadges();
-      const q = (inputQuickSearchReg.value || "").trim().toLowerCase();
-
-      const filtered = registrations.filter((r) => {
-        if (!q) return true;
-        return `${r.code} ${r.fullName} ${r.className} ${r.department}`.toLowerCase().includes(q);
-      });
-
-      if (filtered.length === 0) {
-        recentRegistrationsList.innerHTML = `
-          <div class="p-4 text-center text-xs text-zinc-500 border border-dashed border-zinc-300 rounded">
-            Không tìm thấy đơn đăng ký khớp với từ khóa.
-          </div>
-        `;
-      } else {
-        recentRegistrationsList.innerHTML = filtered
-          .map(
-            (r) => `
-            <div class="p-3.5 bg-white/60 backdrop-blur-md border border-white/90 rounded-2xl shadow-sm text-xs flex items-start justify-between gap-2">
-              <div class="space-y-0.5">
-                <div class="flex items-center gap-2">
-                  <span class="font-mono-tech font-bold text-teal-900 bg-teal-500/15 border border-teal-500/30 px-2 py-0.5 rounded-full">${escapeHtml(r.code)}</span>
-                  <strong class="text-slate-900">${escapeHtml(r.fullName)}</strong>
-                  <span class="font-mono-tech text-slate-600">(${escapeHtml(r.className)})</span>
-                </div>
-                <div class="text-slate-700 font-medium">${escapeHtml(r.department)}</div>
-                <div class="text-slate-500 font-mono-tech text-[11px]">${escapeHtml(r.experience)} • ${escapeHtml(r.createdAt)}</div>
-              </div>
-            </div>
-          `
-          )
-          .join("");
-      }
-
-      // Render bảng đầy đủ trong Modal Quản lý đơn
-      rosterTableBody.innerHTML = registrations
-        .map(
-          (r, index) => `
-          <tr>
-            <td class="p-2.5 font-mono-tech font-semibold text-green-900">${escapeHtml(r.code)}</td>
-            <td class="p-2.5 font-medium text-zinc-900">${escapeHtml(r.fullName)}</td>
-            <td class="p-2.5 font-mono-tech">${escapeHtml(r.className)} (${escapeHtml(r.grade)})</td>
-            <td class="p-2.5 font-mono-tech">${escapeHtml(r.phone)}</td>
-            <td class="p-2.5">${escapeHtml(r.department)}</td>
-            <td class="p-2.5 text-zinc-600">${escapeHtml(r.experience)}</td>
-            <td class="p-2.5">
-              <button
-                type="button"
-                data-del-reg="${index}"
-                class="btn-del-reg text-red-700 hover:underline font-mono-tech text-xs"
-              >
-                Xóa
-              </button>
-            </td>
-          </tr>
-        `
-        )
-        .join("");
-
-      document.querySelectorAll(".btn-del-reg").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const idx = parseInt(btn.getAttribute("data-del-reg"), 10);
-          if (!isNaN(idx) && idx >= 0 && idx < registrations.length) {
-            registrations.splice(idx, 1);
-            saveStoredData(STORAGE_KEY_REG, registrations);
-            renderRegistrationsList();
-          }
-        });
-      });
-    }
-
-    inputQuickSearchReg.addEventListener("input", () => {
-      renderRegistrationsList();
-    });
-
-    // Nút điền nhanh lý do đăng ký
     document.querySelectorAll(".prompt-chip-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         const text = btn.getAttribute("data-prompt-fill");
@@ -1421,29 +1164,29 @@ void capNhatBomNuoc(int doAmDat) {
       });
     });
 
-    // Xử lý nộp đơn đăng ký
-    clubRegistrationForm.addEventListener("submit", (e) => {
+    clubRegistrationForm?.addEventListener("submit", (e) => {
       e.preventDefault();
-      regErrorBanner.classList.add("hidden");
+      regErrorBanner?.classList.add("hidden");
 
-      const fullName = document.getElementById("regFullName").value.trim();
-      const grade = document.getElementById("regGrade").value;
-      const className = document.getElementById("regClassName").value.trim().toUpperCase();
-      const phone = document.getElementById("regPhone").value.trim();
-      const email = document.getElementById("regEmail").value.trim();
-      const department = document.getElementById("regDepartment").value;
-      const experience = document.getElementById("regExperience").value;
-      const schedule = document.getElementById("regSchedule").value;
-      const motivation = document.getElementById("regMotivation").value.trim();
-      const consent = document.getElementById("regConsent").checked;
+      const fullName = document.getElementById("regFullName")?.value.trim() || "";
+      const grade = document.getElementById("regGrade")?.value || "Khối 10";
+      const className = (document.getElementById("regClassName")?.value || "").trim().toUpperCase();
+      const phone = (document.getElementById("regPhone")?.value || "").trim();
+      const email = (document.getElementById("regEmail")?.value || "").trim();
+      const department = document.getElementById("regDepartment")?.value || "";
+      const experience = document.getElementById("regExperience")?.value || "";
+      const schedule = document.getElementById("regSchedule")?.value || "buổi họp mặt đầu tiên của CLB";
+      const motivation = (document.getElementById("regMotivation")?.value || "").trim();
+      const consent = document.getElementById("regConsent")?.checked ?? true;
 
       const phoneClean = phone.replace(/[\s.-]/g, "");
       const isPhoneValid = /^0\d{8,10}$/.test(phoneClean);
 
       if (!fullName || !className || !isPhoneValid || !motivation || !consent) {
-        let msg = "Vui lòng điền đầy đủ Họ tên, Lớp, Số điện thoại hợp lệ (bắt đầu bằng số 0, từ 9–11 chữ số), Mong muốn khi vào CLB và tích xác nhận nội quy.";
-        regErrorBanner.textContent = msg;
-        regErrorBanner.classList.remove("hidden");
+        if (regErrorBanner) {
+          regErrorBanner.textContent = "Vui lòng điền đầy đủ Họ tên, Lớp, Số điện thoại hợp lệ (bắt đầu bằng số 0, từ 9–11 chữ số), Mong muốn khi vào CLB và tích xác nhận nội quy.";
+          regErrorBanner.classList.remove("hidden");
+        }
         return;
       }
 
@@ -1452,7 +1195,7 @@ void capNhatBomNuoc(int doAmDat) {
       const today = new Date();
       const createdAt = `${String(today.getDate()).padStart(2, "0")}/${String(today.getMonth() + 1).padStart(2, "0")}/${today.getFullYear()}`;
 
-      const newRecord = {
+      registrations.unshift({
         code,
         fullName,
         grade,
@@ -1464,161 +1207,36 @@ void capNhatBomNuoc(int doAmDat) {
         schedule,
         motivation,
         createdAt
-      };
-
-      registrations.unshift(newRecord);
+      });
       saveStoredData(STORAGE_KEY_REG, registrations);
-      renderRegistrationsList();
 
-      document.getElementById("regSuccessTitle").textContent = `Chào mừng ${fullName} (${className})!`;
-      document.getElementById("regSuccessDetail").textContent = `Đơn đăng ký vào "${department}" của bạn đã được lưu. Hẹn gặp bạn vào ${schedule} tại Phòng Thực hành Vật lý - Công nghệ Trường THPT Củ Chi.`;
-      document.getElementById("regSuccessCode").textContent = code;
-      regSuccessBanner.classList.remove("hidden");
+      const titleEl = document.getElementById("regSuccessTitle");
+      const detailEl = document.getElementById("regSuccessDetail");
+      const codeEl = document.getElementById("regSuccessCode");
+      if (titleEl) titleEl.textContent = `Chào mừng ${fullName} (${className})!`;
+      if (detailEl) detailEl.textContent = `Đơn đăng ký vào "${department}" của bạn đã được lưu. Hẹn gặp bạn vào ${schedule} tại Phòng Thực hành Vật lý - Công nghệ Trường THPT Củ Chi.`;
+      if (codeEl) codeEl.textContent = code;
+      regSuccessBanner?.classList.remove("hidden");
 
       clubRegistrationForm.reset();
-      document.getElementById("regConsent").checked = true;
+      const consentEl = document.getElementById("regConsent");
+      if (consentEl) consentEl.checked = true;
     });
 
-    document.getElementById("btnResetRegistration").addEventListener("click", () => {
-      clubRegistrationForm.reset();
-      document.getElementById("regConsent").checked = true;
-      regErrorBanner.classList.add("hidden");
-      regSuccessBanner.classList.add("hidden");
+    document.getElementById("btnResetRegistration")?.addEventListener("click", () => {
+      clubRegistrationForm?.reset();
+      const consentEl = document.getElementById("regConsent");
+      if (consentEl) consentEl.checked = true;
+      regErrorBanner?.classList.add("hidden");
+      regSuccessBanner?.classList.add("hidden");
     });
 
-    document.getElementById("btnCloseSuccessBanner").addEventListener("click", () => {
-      regSuccessBanner.classList.add("hidden");
-    });
-
-    // Xuất danh sách đơn đăng ký ra CSV
-    function exportRegistrationsCsv() {
-      const headers = ["Mã đơn", "Họ và tên", "Khối", "Lớp", "Số điện thoại", "Email", "Ban chuyên môn", "Kinh nghiệm", "Lịch sinh hoạt", "Mong muốn / Ý tưởng", "Ngày đăng ký"];
-      const rows = registrations.map((r) => [
-        r.code,
-        r.fullName,
-        r.grade,
-        r.className,
-        r.phone,
-        r.email || "",
-        r.department,
-        r.experience,
-        r.schedule,
-        r.motivation,
-        r.createdAt
-      ]);
-
-      const csvContent =
-        "\uFEFF" +
-        [headers, ...rows]
-          .map((row) =>
-            row
-              .map((cell) => `"${String(cell || "").replace(/"/g, '""')}"`)
-              .join(",")
-          )
-          .join("\n");
-
-      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "danh_sach_dang_ky_clb_stem_aiot_thpt_cuchi.csv";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-    }
-
-    document.getElementById("btnExportCsvQuick").addEventListener("click", exportRegistrationsCsv);
-    document.getElementById("btnExportCsvModal").addEventListener("click", exportRegistrationsCsv);
-
-    // Sao chép danh sách đơn vào Clipboard
-    document.getElementById("btnCopyRosterText").addEventListener("click", () => {
-      const text = registrations
-        .map((r) => `${r.code} | ${r.fullName} | Lớp ${r.className} | SĐT: ${r.phone} | ${r.department}`)
-        .join("\n");
-
-      const showCopied = () => {
-        const banner = document.getElementById("copyFeedbackBanner");
-        banner.classList.remove("hidden");
-        setTimeout(() => banner.classList.add("hidden"), 3000);
-      };
-
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(showCopied).catch(() => {
-          fallbackCopy(text);
-          showCopied();
-        });
-      } else {
-        fallbackCopy(text);
-        showCopied();
-      }
-    });
-
-    function fallbackCopy(text) {
-      const ta = document.createElement("textarea");
-      ta.value = text;
-      document.body.appendChild(ta);
-      ta.select();
-      try {
-        document.execCommand("copy");
-      } catch (e) {}
-      document.body.removeChild(ta);
-    }
-
-    // ====================================================
-    // 6. ĐIỀU KHIỂN CÁC MODAL & MENU ĐIỆN THOẠI
-    // ====================================================
-    const modalInventory = document.getElementById("modalInventory");
-    const modalRosterManager = document.getElementById("modalRosterManager");
-    const mobileMenuPanel = document.getElementById("mobileMenuPanel");
-
-    document.getElementById("btnShowInventoryModal").addEventListener("click", () => {
-      modalInventory.classList.remove("hidden");
-    });
-    document.getElementById("btnFooterOpenInventory").addEventListener("click", () => {
-      modalInventory.classList.remove("hidden");
-    });
-    document.getElementById("btnCloseInventoryModal").addEventListener("click", () => {
-      modalInventory.classList.add("hidden");
-    });
-
-    function openRosterModal() {
-      renderRegistrationsList();
-      modalRosterManager.classList.remove("hidden");
-    }
-
-    document.getElementById("btnOpenAdminDrawer").addEventListener("click", openRosterModal);
-    document.getElementById("btnOpenAdminMobile").addEventListener("click", () => {
-      mobileMenuPanel.classList.add("hidden");
-      openRosterModal();
-    });
-    document.getElementById("btnOpenFullRoster").addEventListener("click", openRosterModal);
-    document.getElementById("btnCloseRosterModal").addEventListener("click", () => {
-      modalRosterManager.classList.add("hidden");
-    });
-
-    // Đóng modal khi bấm nền tối bên ngoài
-    [modalProjectDetail, modalAddAchievement, modalInventory, modalRosterManager].forEach((modalEl) => {
-      modalEl.addEventListener("click", (e) => {
-        if (e.target === modalEl) {
-          modalEl.classList.add("hidden");
-        }
-      });
-    });
-
-    // Menu điện thoại
-    document.getElementById("btnMobileToggle").addEventListener("click", () => {
-      mobileMenuPanel.classList.toggle("hidden");
-    });
-    document.querySelectorAll(".mobile-nav-link").forEach((link) => {
-      link.addEventListener("click", () => {
-        mobileMenuPanel.classList.add("hidden");
-      });
+    document.getElementById("btnCloseSuccessBanner")?.addEventListener("click", () => {
+      regSuccessBanner?.classList.add("hidden");
     });
 
     // Khởi chạy hiển thị ban đầu
     renderAchievements();
-    renderRegistrationsList();
   </script>
 </body>
 </html>
