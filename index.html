@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CLB STEM - AIOT | Trường THPT Củ Chi</title>
+<title>CLB STEM - AIOT | Trường THPT Củ Chi</title>
+  <!-- Logo trên thanh Tab Chrome (Favicon) -->
+  <link rel="icon" type="image/png" href="logo-stem-aiot.png" />
+  <link rel="apple-touch-icon" href="logo-stem-aiot.png" />
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -204,7 +207,8 @@
 </head>
 <body class="min-h-screen flex flex-col selection:bg-green-200 selection:text-green-950">
 
-  <div class="bg-slate-900/75 backdrop-blur-xl text-slate-100 text-xs border-b border-white/20">
+  <!-- Thanh trên cùng: Ẩn trên điện thoại (vì đã gộp xuống thanh dưới), giữ nguyên trên máy tính -->
+  <div class="hidden sm:block bg-slate-900/75 backdrop-blur-xl text-slate-100 text-xs border-b border-white/20">
     <div class="max-w-6xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2">
       <div class="flex items-center gap-4 font-mono-tech text-slate-300">
         <span>Phòng CLB</span>
@@ -215,14 +219,22 @@
   </div>
 
   <header class="sticky top-3 z-30 px-3 sm:px-4 pt-2">
-    <div class="max-w-6xl mx-auto liquid-nav-bar rounded-full px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-      <a href="#gioi-thieu" class="flex items-center gap-3 group">
-        <div class="w-10 h-10 bg-teal-600/90 text-white rounded-2xl flex items-center justify-center font-mono-tech font-bold text-sm border border-white/50 shadow-sm shrink-0">
-          AIOT
-        </div>
-        <div>
-          <div class="font-bold text-base sm:text-lg text-slate-900 leading-tight">CLB STEM AIOT</div>
-          <div class="text-xs text-slate-600 font-mono-tech">Trường THPT Củ Chi • Thành lập 2025</div>
+    <div class="max-w-6xl mx-auto liquid-nav-bar rounded-full px-4 sm:px-6 py-2 sm:py-0 sm:h-16 flex items-center justify-between gap-3 sm:gap-4">
+      <a href="#gioi-thieu" class="flex items-center gap-3 group min-w-0">
+        <!-- Logo STEM AIOT thay cho chữ AIOT -->
+        <img
+          src="logo-stem-aiot.png"
+          alt="Logo CLB STEM AIOT"
+          class="w-11 h-11 sm:w-10 sm:h-10 rounded-full object-cover bg-white border border-white/80 shadow-sm shrink-0"
+        />
+        <div class="min-w-0">
+          <!-- Phần "Phòng CLB" được gộp chung vào thanh này trên giao diện điện thoại -->
+          <div class="flex items-center gap-1.5 text-[10px] font-mono-tech text-teal-800 font-semibold leading-none mb-0.5 sm:hidden">
+            <span class="px-1.5 py-0.5 rounded-full bg-slate-900/80 text-slate-100">Phòng CLB</span>
+            <span class="text-slate-500">• Chưa chính thức</span>
+          </div>
+          <div class="font-bold text-base sm:text-lg text-slate-900 leading-tight truncate">CLB STEM AIOT</div>
+          <div class="text-xs text-slate-600 font-mono-tech truncate">Trường THPT Củ Chi • Thành lập 2025</div>
         </div>
       </a>
 
@@ -233,7 +245,7 @@
         <a href="#dang-ky" class="ml-2 btn-primary-green px-4 py-2 text-sm">Đăng ký ngay</a>
       </nav>
 
-      <div class="flex items-center gap-2 md:hidden">
+      <div class="flex items-center gap-2 md:hidden shrink-0">
         <button type="button" id="btnMobileToggle" class="btn-outline-flat px-3.5 py-1.5 text-sm font-mono-tech" aria-label="Mở menu">
           Menu ☰
         </button>
@@ -249,7 +261,6 @@
       </div>
     </div>
   </header>
-
   <main class="flex-1">
 
     <section id="gioi-thieu" class="tech-grid-bg py-10 sm:py-14">
