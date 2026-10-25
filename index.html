@@ -1048,10 +1048,10 @@
       });
     });
 
-// ================= CẤU HÌNH 2 EMAIL NHẬN ĐƠN ĐĂNG KÝ CỦA QUẢN LÝ CLB =================
-    const EMAIL_QUAN_LY_1 = "nguyenlong17022009@gmail.com"; // <-- Đại ca điền email Quản lý 1 vào đây
-    const EMAIL_QUAN_LY_2 = "mn20122009@gmail.com"; // <-- Đại ca điền email Quản lý 2 vào đây
-    // =====================================================================================
+// ================= CẤU HÌNH 2 EMAIL QUẢN LÝ CLB =================
+    const EMAIL_QUAN_LY_1 = "nguyenlong17022009@gmail.com";
+    const EMAIL_QUAN_LY_2 = "mn20122009@gmail.com";
+    // ================================================================
 
     clubRegistrationForm?.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -1084,7 +1084,7 @@
       const today = new Date();
       const createdAt = `${String(today.getDate()).padStart(2, "0")}/${String(today.getMonth() + 1).padStart(2, "0")}/${today.getFullYear()} - ${String(today.getHours()).padStart(2, "0")}:${String(today.getMinutes()).padStart(2, "0")}`;
 
-      // Đổi trạng thái nút bấm khi đang gửi về Email
+      // Khóa nút bấm và hiển thị trạng thái đang xử lý
       const submitBtn = document.getElementById("btnSubmitRegistration");
       const originalBtnText = submitBtn ? submitBtn.textContent : "Gửi đơn đăng ký vào CLB";
       if (submitBtn) {
@@ -1092,7 +1092,7 @@
         submitBtn.textContent = "Đang gửi đơn về CLB...";
       }
 
-      // Gửi dữ liệu ngầm về cả 2 Email của Quản lý CLB (Trình bày bảng đẹp mắt)
+      // Gửi dữ liệu đồng thời về 2 email qua FormSubmit
       try {
         await fetch(`https://formsubmit.co/ajax/${EMAIL_QUAN_LY_1}`, {
           method: "POST",
@@ -1102,8 +1102,8 @@
           },
           body: JSON.stringify({
             _subject: `[CLB STEM AIOT] Đơn đăng ký mới: ${fullName} (${className}) - Mã: ${code}`,
-            _cc: EMAIL_QUAN_LY_2, // Tự động gửi đồng thời cho Quản lý 2
-            _template: "table",   // Định dạng bảng gọn đẹp trong Gmail
+            _cc: EMAIL_QUAN_LY_2,
+            _template: "table",
             _captcha: "false",
             "Mã số đơn": code,
             "Họ và tên học sinh": fullName,
@@ -1118,7 +1118,7 @@
           })
         });
       } catch (err) {
-        console.error("Lỗi kết nối gửi mail:", err);
+        console.error("Lỗi gửi dữ liệu qua email:", err);
       } finally {
         if (submitBtn) {
           submitBtn.disabled = false;
@@ -1126,7 +1126,7 @@
         }
       }
 
-      // Lưu vào bộ nhớ và hiển thị thông báo thành công như cũ trên giao diện Web
+      // Lưu trữ đơn và hiển thị thông báo thành công trên trang
       registrations.unshift({
         code,
         fullName,
@@ -1146,7 +1146,7 @@
       const detailEl = document.getElementById("regSuccessDetail");
       const codeEl = document.getElementById("regSuccessCode");
       if (titleEl) titleEl.textContent = `Chào mừng ${fullName} (${className})!`;
-      if (detailEl) detailEl.textContent = `Đơn đăng ký vào "${department}" của bạn đã được lưu và gửi thẳng về email Ban Quản Lý CLB. Hẹn gặp bạn vào ${schedule} tại Phòng Họp CLB Trường THPT Củ Chi.`;
+      if (detailEl) detailEl.textContent = `Đơn đăng ký vào "${department}" của bạn đã được lưu và gửi tới ban quản lý CLB. Hẹn gặp bạn vào ${schedule} tại Phòng Họp CLB Trường THPT Củ Chi.`;
       if (codeEl) codeEl.textContent = code;
       regSuccessBanner?.classList.remove("hidden");
 
@@ -1154,7 +1154,6 @@
       const consentEl = document.getElementById("regConsent");
       if (consentEl) consentEl.checked = true;
     });
-
     document.getElementById("btnResetRegistration")?.addEventListener("click", () => {
       clubRegistrationForm?.reset();
       const consentEl = document.getElementById("regConsent");
