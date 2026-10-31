@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>STEM AIOT — Admin Analytics</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;padding:24px;font:15px system-ui;background:#eef6fb;color:#0f172a}
+main{max-width:1100px;margin:auto}.card{background:#ffffffd9;border:1px solid white;border-radius:18px;padding:18px;box-shadow:0 8px 28px #0f172a12;margin:12px 0}
+input,button{padding:11px 13px;border-radius:10px;border:1px solid #cbd5e1;font:inherit}button{background:#0d9488;color:white;border:0;cursor:pointer}
+form{display:flex;gap:8px;flex-wrap:wrap}input{min-width:220px;flex:1}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:10px;border-bottom:1px solid #e2e8f0;white-space:nowrap} .scroll{overflow:auto}.muted{color:#64748b}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}.num{font-size:28px;font-weight:750}
+</style></head>
+<body><main>
+<h1>Visitor Analytics</h1><p class="muted">Khu vực quản trị riêng — đăng nhập bằng tài khoản Supabase Auth được cấp role admin.</p>
+<section class="card" id="login">
+<form id="loginForm"><input id="email" type="email" placeholder="Email admin" required><input id="password" type="password" placeholder="Mật khẩu" required><button>Đăng nhập</button></form>
+<p id="loginMsg" class="muted"></p></section>
+<section id="dashboard" hidden>
+<div class="card"><button id="logout">Đăng xuất</button> <button id="refresh">Làm mới</button><p id="msg" class="muted"></p></div>
+<div class="grid">
+<div class="card"><div class="muted">Tổng lượt ghi nhận</div><div class="num" id="total">—</div></div>
+<div class="card"><div class="muted">Điện thoại</div><div class="num" id="mobile">—</div></div>
+<div class="card"><div class="muted">Máy tính</div><div class="num" id="desktop">—</div></div>
+<div class="card"><div class="muted">GPS tự nguyện</div><div class="num" id="gps">—</div></div>
+</div>
+<div class="card"><h2>Lượt truy cập gần đây</h2><div class="scroll"><table><thead><tr><th>Thời gian</th><th>Thiết bị</th><th>Hệ điều hành</th><th>Trình duyệt</th><th>Trang</th><th>GPS</th><th>Độ chính xác</th></tr></thead><tbody id="rows"></tbody></table></div></div>
+</section></main>
+<script>
+const URL="YOUR_SUPABASE_PROJECT_URL", KEY="YOUR_SUPABASE_ANON_KEY";
+const client=supabase.createClient(URL,KEY);
+const $=id=>document.getElementById(id);
+$("loginForm").addEventListener("submit",async e=>{
+ e.preventDefault(); const {data,error}=await client.auth.signInWithPassword({email:$("email").value,password:$("password").value});
+ if(error){$("loginMsg").textContent=error.message;return} await load();
+});
+$("logout").onclick=async()=>{await client.auth.signOut();$("dashboard").hidden=true;$("login").hidden=false;};
+$("refresh").onclick=load;
+async function load(){
+ const {data:{user}}=await client.auth.getUser();
+ if(!user){$("dashboard").hidden=true;$("login").hidden=false;return}
+ if(user.app_metadata?.role!=="admin"){ $("loginMsg").textContent="Tài khoản chưa được cấp quyền admin."; await client.auth.signOut(); return; }
+ $("login").hidden=true;$("dashboard").hidden=false;$("msg").textContent="Đang tải…";
+ const {data,error}=await client.from("visitor_events").select("*").order("created_at",{ascending:false}).limit(500);
+ if(error){$("msg").textContent="Không tải được dữ liệu: "+error.message;return}
+ $("total").textContent=data.length;
+ $("mobile").textContent=data.filter(x=>x.device_type==="mobile").length;
+ $("desktop").textContent=data.filter(x=>x.device_type==="desktop").length;
+ $("gps").textContent=data.filter(x=>x.gps_latitude!==null).length;
+ $("rows").innerHTML=data.map(x=>{
+  const gps=x.gps_latitude===null?"—":`${x.gps_latitude.toFixed(5)}, ${x.gps_longitude.toFixed(5)}`;
+  return `<tr><td>${new Date(x.created_at).toLocaleString("vi-VN")}</td><td>${esc(x.device_type)}</td><td>${esc(x.platform)}</td><td>${esc(x.browser)}</td><td>${esc(x.page_path)}</td><td>${gps}</td><td>${x.gps_accuracy_m==null?"—":x.gps_accuracy_m+" m"}</td></tr>`;
+ }).join("");
+ $("msg").textContent=`Đang hiển thị tối đa ${data.length} bản ghi mới nhất.`;
+}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+client.auth.getSession().then(load);
+</script></body></html>
