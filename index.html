@@ -1975,7 +1975,7 @@
     showStatus();
     try {
       await sendEvent({ event_type: "page_view", gps_latitude: null, gps_longitude: null });
-      statusText.textContent = "Đã bật thống kê truy cập. Bạn có thể chọn chia sẻ GPS hoặc từ chối.";
+      statusText.textContent = "Đã bật thống kê truy cập. Bạn có thể chọn Đồng ý hoặc từ chối.";
     } catch (err) {
       statusText.textContent = "Chưa kết nối được máy chủ thống kê. Vui lòng thử lại sau.";
       console.error("[Visitor Analytics]", err);
@@ -2010,21 +2010,21 @@
         console.error("[Visitor Analytics]", err);
       } finally {
         gpsBtn.disabled = false;
-        gpsBtn.textContent = "Chia sẻ GPS tự nguyện";
+        gpsBtn.textContent = "Đồng ý";
       }
     }, error => {
       statusText.textContent = error.code === 1
-        ? "Bạn đã từ chối quyền vị trí. Không có tọa độ GPS nào được gửi."
+        ? "Bạn đã từ chối quyền truy cập."
         : "Không lấy được vị trí GPS. Bạn vẫn có thể sử dụng website bình thường.";
       gpsBtn.disabled = false;
-      gpsBtn.textContent = "Chia sẻ GPS tự nguyện";
+      gpsBtn.textContent = "Đồng ý";
     }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 });
   });
 
   stopBtn.addEventListener("click", () => {
     localStorage.setItem(CONSENT_KEY, "denied");
     statusBox.hidden = true;
-    statusText.textContent = "Đã tắt thống kê trên thiết bị này.";
+    statusText.textContent = "Đã tắt vị trí trên thiết bị này.";
   });
 
   const consent = localStorage.getItem(CONSENT_KEY);
