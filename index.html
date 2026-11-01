@@ -2013,12 +2013,39 @@
         gpsBtn.textContent = "Đồng ý";
       }
     }, error => {
-      statusText.textContent = error.code === 1
-        ? "Bạn đã từ chối quyền truy cập."
-        : "Không lấy được vị trí GPS. Bạn vẫn có thể sử dụng website bình thường.";
-      gpsBtn.disabled = false;
-      gpsBtn.textContent = "Đồng ý";
-    }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 });
+  console.error("[GPS Error]", {
+    code: error.code,
+    message: error.message
+  });
+
+  switch (error.code) {
+    case 1:
+      statusText.textContent =
+        "Bạn đã từ chối";
+      break;
+
+    case 2:
+      statusText.textContent =
+        "Không xác định được vị trí. Hãy bật Location Services trên Windows và kiểm tra kết nối mạng.";
+      break;
+
+    case 3:
+      statusText.textContent =
+        "Định vị quá thời gian chờ. Hãy thử lại khi kết nối mạng ổn định.";
+      break;
+
+    default:
+      statusText.textContent =
+        "Lỗi định vị không xác định: " + error.message;
+  }
+
+  gpsBtn.disabled = false;
+  gpsBtn.textContent = "Đồng ý để tiếp tục";
+}, {
+  enableHighAccuracy: false,
+  timeout: 30000,
+  maximumAge: 60000
+});
   });
 
   stopBtn.addEventListener("click", () => {
