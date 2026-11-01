@@ -27,9 +27,13 @@ form{display:flex;gap:8px;flex-wrap:wrap}input{min-width:220px;flex:1}table{widt
 <div class="card"><h2>Lượt truy cập gần đây</h2><div class="scroll"><table><thead><tr><th>Thời gian</th><th>Thiết bị</th><th>Hệ điều hành</th><th>Trình duyệt</th><th>Trang</th><th>GPS</th><th>Độ chính xác</th></tr></thead><tbody id="rows"></tbody></table></div></div>
 </section></main>
 <script>
-const URL="https://piajhpmonhcvhuefacde.supabase.co";
-const KEY="sb_publishable_KsQaBGDhBGXomRJsQWPOaA_g4t5MaHj";
-const client=supabase.createClient(URL,KEY);
+const SUPABASE_URL = "https://piajhpmonhcvhuefacde.supabase.co";
+const SUPABASE_KEY = "sb_publishable_KsQaBGDhBGXomRJsQWPOaA_g4t5MaHj";
+
+const client = supabase.createClient(
+    SUPABASE_URL.trim(),
+    SUPABASE_KEY.trim()
+);
 const $=id=>document.getElementById(id);
 $("loginForm").addEventListener("submit",async e=>{
  e.preventDefault(); const {data,error}=await client.auth.signInWithPassword({email:$("email").value,password:$("password").value});
